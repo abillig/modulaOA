@@ -1,25 +1,20 @@
 import * as d3 from 'd3';
 import datesHandler from './datesHandler.js';
 import store from './store.js';
+import utils from './utils.js';
 
-
-function buildXScale(){
-  var x = d3.scaleTime()
+function xScale(){
+  return d3.scaleTime()
           .rangeRound([150, store.get().width])
-
-  return x
 }
 
 function addXDomain(xScale){
-  xScale.domain(d3.extent(datesHandler.collectDates(store.get().currentData), function(d) { return datesHandler.parseTime(d); }));
-  return xScale;
+  return xScale.domain(d3.extent(datesHandler.collectDates(store.get().currentData), function(d) { return datesHandler.parseTime(d); }));
 }
 
 function buildXTimeScale(){
-  var xScale = buildXScale();
-  return addXDomain(xScale);
+  return addXDomain(xScale());
 }
-
 
 function createXAxis() {
   var baseElement = store.get().baseElement
@@ -57,6 +52,7 @@ function buildYScale(){
   var yScale = d3.scaleLinear()
   .domain([0, store.get().yAxisLabels.length])
   .range([store.get().margin.top, store.get().height])
+  return yScale
 }
 
 function yAxis(){
@@ -70,13 +66,44 @@ function yAxis(){
   return yAxis
 }
 
+function formatYAxisHtml(d, i) {
+    var categories = ["Medications", "Radiation", "Surgery", "Imaging", "Molecular", "Outcome", "ECOG PS"]
+    if(categories.includes(store.get().yAxisLabels[d])) {
+      return `<div class="lediv ${store.get().yAxisLabels[d]}-axislabel"><p class="yaxis-label"><i class="fas fa-hospital"></i>&nbsp&nbsp&nbsp${utils.formatString(store.get().yAxisLabels[d])}</p></div>`
+    } else {
+      return `<p class="yaxis-label subcategory ${store.get().yAxisLabels[d]}-axislabel">&nbsp&nbsp&nbsp${utils.formatString(store.get().yAxisLabels[d])}</p>`
+    };
+}
 
-var createYAxis() {
+
+function createYAxis() {
   var axisY = store.get().baseElement.append("g")
    .attr("class", "y axis")
    .attr("id", "yaxis")
    .attr("transform", "translate(" + [150, -store.get().margin.bottom/2] + ")")
-   .call(yAxis);
+   .call(yAxis())
+   .selectAll("g")
+   .append("svg:foreignObject")
+   .append("xhtml:div")
+   .html(formatYAxisHtml);
+
+   d3.selectAll('.lediv')
+   .style("height", function(d,i){
+     if (store.get().yAxisLabels[i] == "Medications") {
+       return store.get().height + "px";
+     } else if (store.get().yAxisLabels[i] !== "") {
+       return store.get().height / 16 * 2.2 + "px";
+     } else {
+       return '0px;'
+
+     }
+   })
+
+   // bold the y axis
+    store.get().baseElement.select("#yaxis").selectAll("text").attr("class", function(d,i) {
+      var categories = ["Medications", "Radiation", "Surgery", "Imaging", "Molecular", "Outcome", "ECOG PS"]
+        return "categoryAxisLabel"
+    });
 }
 
 export default {

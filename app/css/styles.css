@@ -1,0 +1,163 @@
+.surgery {
+  fill: #ff9800;
+}
+
+.imaging {
+  fill: #35b135;
+}
+
+.molecular {
+  fill: #681975;
+}
+
+.circle-text-value {
+  fill: black;
+  color: black;
+}
+
+.label-rect {
+  /*width: 30px;
+  height: 30px;*/
+  fill: #d3d3d3;
+  opacity: .5;
+  stroke: gray;
+  /*stroke-dasharray: 50, 150, 150;*/
+}
+
+.top { stroke-dasharray: 0,50,150 }
+.left { stroke-dasharray: 150,50 }
+.bottom { stroke-dasharray: 100,50 }
+.right { stroke-dasharray: 50,50,100 }
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 100px;
+  height: 70px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.line {
+  fill: none;
+  stroke: #d3d3d3;
+  stroke-width: 2px;
+}
+
+.grid line {
+  stroke: lightgrey;
+  stroke-opacity: 0.7;
+  shape-rendering: crispEdges;
+  stroke-dasharray: 2, 2;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+text {
+  color: green;
+}
+
+.y.axis line, .y.axis path {
+  display: none;
+}
+
+
+#line path {
+  stroke: #1090a8;
+}
+
+#line text {
+  fill: black;
+}
+
+.categoryAxisLabel {
+  font-weight: bold;
+  font-size: 1px;
+  fill: #efeeef;
+  /*display: none; */
+  /*margin-left: 30px; */
+}
+
+.lediv {
+  background-color: #efeeef;
+  margin-left: -150px;
+  border-top: 1px solid #d3d3d3;
+  /*border-right: 1px solid blue;*/
+}
+
+.lediv p {
+  padding-top: 10px;
+  padding-left: 15px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.axis.tick text{
+  display: none;
+}
+
+.subcategory {
+  padding-top: 15px;
+  margin-left: -150px;
+  padding-left: 28px;
+  font-size: 10px;
+}
+
+.gantt-rect {
+ rx: 2;
+ ry: 2;
+}
+
+.tick {
+
+}
+
+.radiation-circle {
+  fill: #ffeb3b;
+}
+
+.Molecular-circle {
+  fill: #32cd32;
+}
+
+.Outcome-circle {
+  fill: #ff00a3;
+}
+
+.imaging-circle {
+  fill: #3ECAE8;
+}
+
+.medication-circle {
+  fill: #FF9E00;
+}
+
+.Molecular-axislabel {
+  border-right: 1px solid #32cd32;
+}
+
+.Outcome-axislabel {
+  border-right: 1px solid #ff00a3;
+}
+
+.Imaging-axislabel, .CT-axislabel, .MRI-axislabel {
+  border-right: 1px solid #3ECAE8;
+}
+
+.Radiation-axislabel, .EBRT-axislabel, .SRS-axislabel, .WBRT-axislabel {
+  border-right: 1px solid #ffeb3b;
+}
+
+.INFUSION-axislabel {
+  border-right: 1px solid #FF9E00;
+}
+
+.PS-axislabel {
+  border-right: 1px solid rgb(16, 144, 168);
+}

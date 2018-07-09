@@ -2,7 +2,6 @@ import * as d3 from 'd3';
 import axisHandler from './axisHandler.js';
 import store from './store.js';
 
-
 function initialChartSetup() {
   var svg = d3.select("#charts"),
       margin = {top: 20, right: 20, bottom: 30, left: 0},
@@ -31,5 +30,5 @@ function generateChart(data) {
 };
 
 export default {
-  generateChart: generateChart,
+  generateChart: generateChart
 }

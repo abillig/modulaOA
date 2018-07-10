@@ -1,5 +1,4 @@
-import * as d3 from 'd3';
-import realData from './actualData.js'
-import chartBuilder from './helpers/chartBuilder.js';
+import realData from './actualData';
+import chartBuilder from './helpers/chartBuilder';
 
-chartBuilder.generateChart(realData)
+chartBuilder.generateChart(realData);

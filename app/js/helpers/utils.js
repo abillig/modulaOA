@@ -1,19 +1,18 @@
-import store from './store.js';
+import store from '../store';
 
 function formatString(thing) {
   if (thing && thing.length > 15) {
-    return thing.slice(0, 15) + "..."
-  } else {
-    return thing
+    return `${thing.slice(0, 15)}...`;
   }
+  return thing;
 }
 
-function getYPositionOf(term){
-  var percentageHeight = store.get().yAxisLabels.indexOf(term) / store.get().yAxisLabels.length
+function getYPositionOf(term) {
+  const percentageHeight = store.get().yAxisLabels.indexOf(term) / store.get().yAxisLabels.length;
   return store.get().height * percentageHeight - (store.get().yAxisLabels.length - 40);
 }
 
 export default {
-  formatString: formatString,
-  getYPositionOf: getYPositionOf
-}
+  formatString,
+  getYPositionOf,
+};

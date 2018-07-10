@@ -84,14 +84,23 @@ text {
   /*margin-left: 30px; */
 }
 
-.lediv {
+.axisLabel {
   background-color: #efeeef;
   margin-left: -150px;
   border-top: 1px solid #d3d3d3;
+  height: 130px;
   /*border-right: 1px solid blue;*/
 }
 
-.lediv p {
+.Medications-axislabel {
+  height: 500px;
+}
+
+.PS-axislabel {
+  height: 50px;
+}
+
+.axisLabel p {
   padding-top: 10px;
   padding-left: 15px;
   font-size: 12px;

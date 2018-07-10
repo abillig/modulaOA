@@ -7,11 +7,6 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, './dist')
     },
-    resolve: {
-        alias: {
-            $: "jquery/src/jquery",
-        }
-    },
 module: {
         rules: [{
             test: /\.js$/,

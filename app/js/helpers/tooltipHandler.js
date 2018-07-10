@@ -5,6 +5,7 @@ function showTooltip(d) {
   store.get().tooltip.transition()
       .duration(200)
       .style("opacity", .9);
+
   store.get().tooltip.html(d.name + "  " + d.date)
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY - 28) + "px");

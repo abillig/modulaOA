@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import axisHandler from './axisHandler.js';
 import dataDrawer from './dataDrawer.js';
+import zoomHandler from './zoomHandler.js';
 import store from './store.js';
 
 function initialChartSetup() {
@@ -25,25 +26,24 @@ function buildAxes(){
   axisHandler.createYAxis()
 }
 
+function consolidateData(data){
+  var dataKeys = Object.keys(data)
+  var consolidatedData = []
+  dataKeys.forEach(function(key){
+    consolidatedData = consolidatedData.concat(data[key])
+  })
+  return consolidatedData
+}
+
 function generateChart(data) {
-  function consolidateData(data){
-    var dataKeys = Object.keys(data)
-    var consolidatedData = []
-    dataKeys.forEach(function(key){
-      consolidatedData = consolidatedData.concat(data[key])
-    })
-    return consolidatedData
-  }
+  store.setAllData(consolidateData(data))
   store.setCurrentData(consolidateData(data))
   initialChartSetup()
   buildAxes()
-  // var medicationsSection = store.get().baseElement.append("g").attr("id", "gantt").attr("transform", "translate(" + store.get().margin.left + "," + store.get().margin.top + ")")
-  // var radiationSection = store.get().baseElement.append("g").attr("id", "radiations").attr("transform", "translate(" + store.get().margin.left + "," + store.get().margin.top + ")")
-  // var imagingSection = store.get().baseElement.append("g").attr("id", "imaging").attr("transform", "translate(" + store.get().margin.left + "," + store.get().margin.top + ")")
-  dataDrawer.drawCircles(store.get().baseElement, store.get().currentData, 'medication-circle')
-  // dataDrawer.drawCircles(store.get().baseElement, store.get().currentData, 'radiation-circle')
-  // dataDrawer.drawCircles(store.get().baseElement, store.get().currentData, 'imaging-circle')
-  // dataDrawer.drawCircles(store.get().baseElement, store.get().currentData.basic_plotting_categories, 'medication-circle')
+
+  dataDrawer.drawCircles(store.get().baseElement, store.get().currentData)
+  zoomHandler.calculateZoomLevelMapping()
+  zoomHandler.configureSlider()
 };
 
 export default {

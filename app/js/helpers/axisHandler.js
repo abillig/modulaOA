@@ -9,7 +9,7 @@ function xScale(){
 }
 
 function addXDomain(scale){
-  return scale().domain(d3.extent(datesHandler.collectDates(store.get().currentData), function(d) { return datesHandler.parseTime(d); }));
+  return scale().domain(datesHandler.datasetMinAndMaxDates());
 }
 
 function buildXTimeScale(){
@@ -111,8 +111,22 @@ function createYAxis() {
     });
 }
 
+function transitionAxes(){
+  d3.select(".x.axis")
+    .transition()
+    .duration(900)
+    .call(d3.axisBottom(buildXTimeScale()));
+
+  // Update Y Axis
+  d3.select(".y.axis")
+      .transition()
+      .duration(900)
+      .call(yAxis());
+}
+
 export default {
   createXAxis: createXAxis,
   createYAxis: createYAxis,
-  buildXTimeScale: buildXTimeScale
+  buildXTimeScale: buildXTimeScale,
+  transitionAxes: transitionAxes
 }

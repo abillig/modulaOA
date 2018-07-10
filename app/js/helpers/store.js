@@ -1,9 +1,8 @@
 // These variables will stay in the local scope of this module (in this case, person.js)
-var baseElement, width, height, margin, currentData, yAxisLabels;
+var baseElement, tooltip, width, height, margin, currentData, yAxisLabels;
 
 // Make sure your argument name doesn't conflict with variables set above
 exports.setWidth = function (w) {
-    console.log('passed in: ' + w)
     width = w;
 };
 
@@ -27,6 +26,10 @@ exports.setYAxisLabels = function (labels) {
     yAxisLabels = labels;
 };
 
+exports.setTooltip = function (tt) {
+    tooltip = tt;
+};
+
 // You're returning an object with property values set above
 exports.get = function () {
     return {
@@ -35,6 +38,7 @@ exports.get = function () {
         height: height,
         margin: margin,
         currentData: currentData,
-        yAxisLabels: yAxisLabels
+        yAxisLabels: yAxisLabels,
+        tooltip: tooltip
     };
 };

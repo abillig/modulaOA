@@ -8,12 +8,12 @@ function xScale(){
           .rangeRound([150, store.get().width])
 }
 
-function addXDomain(xScale){
-  return xScale.domain(d3.extent(datesHandler.collectDates(store.get().currentData), function(d) { return datesHandler.parseTime(d); }));
+function addXDomain(scale){
+  return scale().domain(d3.extent(datesHandler.collectDates(store.get().currentData), function(d) { return datesHandler.parseTime(d); }));
 }
 
 function buildXTimeScale(){
-  return addXDomain(xScale());
+  return addXDomain(xScale);
 }
 
 function createXAxis() {
@@ -27,11 +27,16 @@ function createXAxis() {
 }
 
 function makeYAxisLabels(){
-  var medicationList = store.get().currentData.medications.map(medication => medication.name)
-  var radiationList = store.get().currentData.radiation.map(radiation => radiation.name)
+  function selectAllMedicationDataPoints(data){
+    return data.filter(function(data){
+      return data.category == "Medication"
+    })
+  }
+  var medicationList = selectAllMedicationDataPoints(store.get().currentData).map(medication => medication.name)
+  // var radiationList = store.get().currentData.radiation.map(radiation => radiation.name)
 
   var medicationListUnique = [...new Set(medicationList)];
-  var radiationListUnique = [...new Set(medicationList)];
+  // var radiationListUnique = [...new Set(medicationList)];
 
   var yAxisLabelsSansMedications = ["Medications", "", "",
     "Radiation", "EBRT", "SRS", "WBRT", "", "",
@@ -108,5 +113,6 @@ function createYAxis() {
 
 export default {
   createXAxis: createXAxis,
-  createYAxis: createYAxis
+  createYAxis: createYAxis,
+  buildXTimeScale: buildXTimeScale
 }

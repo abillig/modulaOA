@@ -4,17 +4,25 @@ var parseTime = d3.timeParse("%d-%b-%y");
 
 function collectDates(dataObj) {
   var datesCollection = []
-  var dataObjkeys = Object.keys(dataObj)
-  dataObjkeys.forEach(function(key){
-    dataObj[key].forEach(function(entry){
-      var entryKeys = Object.keys(entry)
-      entryKeys.forEach(function(key){
-        if(parseTime(entry[key])){
-          datesCollection.push(entry[key])
-        }
-      })
+  dataObj.forEach(function(dataPoint){
+    var entryKeys = Object.keys(dataPoint)
+    entryKeys.forEach(function(key){
+      if(parseTime(dataPoint[key])){
+        datesCollection.push(dataPoint[key])
+      }
     })
   })
+  // var dataObjkeys = Object.keys(dataObj)
+  // dataObjkeys.forEach(function(key){
+  //   dataObj[key].forEach(function(entry){
+  //     var entryKeys = Object.keys(entry)
+  //     entryKeys.forEach(function(key){
+  //       if(parseTime(entry[key])){
+  //         datesCollection.push(entry[key])
+  //       }
+  //     })
+  //   })
+  // })
   return datesCollection
 }
 

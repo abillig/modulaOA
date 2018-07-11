@@ -11,6 +11,7 @@ function resetZoomLevels(zoomLevel) {
 }
 
 function calculateZoomLevelMapping() {
+  // not cleaning up because this will all be rewritten
   const zoomLevelMapping = {};
   const latestDate = datesHandler.datasetMinAndMaxDates()[1];
   const earliestDate = datesHandler.datasetMinAndMaxDates()[0];
@@ -26,6 +27,7 @@ function calculateZoomLevelMapping() {
 }
 
 function configureSlider() {
+  // not cleaning up because this will all be rewritten
   const slider = document.getElementById('myRange');
 
   slider.oninput = function () {

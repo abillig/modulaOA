@@ -8,52 +8,95 @@ let baseElement,
   yAxisLabels,
   zoomLevelMapping;
 
-exports.setWidth = function (w) {
+function setWidth(w) {
   width = w;
-};
+}
 
-exports.setHeight = function (h) {
+function setHeight(h) {
   height = h;
-};
+}
 
-exports.setMargin = function (m) {
+function setMargin(m) {
   margin = m;
-};
+}
 
-exports.setBaseElement = function (element) {
+function setBaseElement(element) {
   baseElement = element;
-};
+}
 
-exports.setCurrentData = function (data) {
+function setCurrentData(data) {
   currentData = data;
-};
+}
 
-exports.setAllData = function (data) {
+function setAllData(data) {
   allData = data;
-};
+}
 
-exports.setYAxisLabels = function (labels) {
+function setYAxisLabels(labels) {
   yAxisLabels = labels;
-};
+}
 
-exports.setTooltip = function (tt) {
+function setTooltip(tt) {
   tooltip = tt;
-};
+}
 
-exports.setZoomLevelMapping = function (zlm) {
+function setZoomLevelMapping(zlm) {
   zoomLevelMapping = zlm;
-};
+}
 
-exports.get = function () {
-  return {
-    baseElement,
-    width,
-    height,
-    margin,
-    allData,
-    currentData,
-    yAxisLabels,
-    tooltip,
-    zoomLevelMapping,
-  };
+function getBaseElement() {
+  return baseElement;
+}
+
+function getWidth() {
+  return width;
+}
+
+function getHeight() {
+  return height;
+}
+
+function getMargin() {
+  return margin;
+}
+
+function getAllData() {
+  return allData;
+}
+
+function getCurrentData() {
+  return currentData;
+}
+
+function getYAxisLabels() {
+  return yAxisLabels;
+}
+
+function getTooltip() {
+  return tooltip;
+}
+
+function getZoomLevelMapping() {
+  return zoomLevelMapping;
+}
+
+export default {
+  setWidth,
+  setHeight,
+  setMargin,
+  setBaseElement,
+  setCurrentData,
+  setAllData,
+  setYAxisLabels,
+  setTooltip,
+  setZoomLevelMapping,
+  getBaseElement,
+  getWidth,
+  getHeight,
+  getMargin,
+  getAllData,
+  getCurrentData,
+  getYAxisLabels,
+  getTooltip,
+  getZoomLevelMapping,
 };

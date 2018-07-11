@@ -5,7 +5,7 @@ import utils from './utils';
 
 function xScale() {
   return d3.scaleTime()
-    .rangeRound([150, store.get().width]);
+    .rangeRound([150, store.getWidth()]);
 }
 
 function addXDomain(scale) {
@@ -17,11 +17,9 @@ function buildXTimeScale() {
 }
 
 function createXAxis() {
-  const { baseElement, height } = store.get();
-
-  baseElement.append('g')
+  store.getBaseElement().append('g')
     .attr('class', 'x axis')
-    .attr('transform', `translate(0,${height})`)
+    .attr('transform', `translate(0,${store.getHeight()})`)
     .call(d3.axisBottom(buildXTimeScale()));
 }
 
@@ -29,7 +27,7 @@ function makeYAxisLabels() {
   function selectMedicationDataPoints(data) {
     return data.filter(dataPoint => dataPoint.category === 'Medication');
   }
-  const medicationList = selectMedicationDataPoints(store.get().currentData).map(medication => medication.name);
+  const medicationList = selectMedicationDataPoints(store.getCurrentData()).map(medication => medication.name);
   const medicationListUnique = [...new Set(medicationList)];
 
   const yAxisLabelsSansMedications = ['Medications', '', '',
@@ -48,8 +46,8 @@ function makeYAxisLabels() {
 
 function buildYScale() {
   const yScale = d3.scaleLinear()
-    .domain([0, store.get().yAxisLabels.length])
-    .range([store.get().margin.top, store.get().height]);
+    .domain([0, store.getYAxisLabels().length])
+    .range([store.getMargin().top, store.getHeight()]);
   return yScale;
 }
 
@@ -57,22 +55,22 @@ function yAxis() {
   makeYAxisLabels();
   const yAxis = d3.axisLeft()
     .scale(buildYScale())
-    .ticks(store.get().yAxisLabels.length)
-    .tickFormat(d => store.get().yAxisLabels[d]);
+    .ticks(store.getYAxisLabels().length)
+    .tickFormat(d => store.getYAxisLabels()[d]);
   return yAxis;
 }
 
 function dataPointBelongsToASubcategory(d) {
   const mainCategories = ['Medications', 'Radiation', 'Surgery', 'Imaging', 'Molecular', 'Outcome', 'ECOG PS'];
-  return mainCategories.includes(store.get().yAxisLabels[d]) === false;
+  return mainCategories.includes(store.getYAxisLabels()[d]) === false;
 }
 
 function axisLabelClass(i) {
-  return `${store.get().yAxisLabels[i]}-axislabel`;
+  return `${store.getYAxisLabels()[i]}-axislabel`;
 }
 
 function axisLabelText(d) {
-  return utils.formatString(store.get().yAxisLabels[d]);
+  return utils.formatString(store.getYAxisLabels()[d]);
 }
 
 function formatYAxisHtml(d, i) {
@@ -84,14 +82,14 @@ function formatYAxisHtml(d, i) {
 
 function boldCategoryLabels() {
   // bold the y axis
-  store.get().baseElement.select('#yaxis').selectAll('text').attr('class', 'categoryAxisLabel');
+  store.getBaseElement().select('#yaxis').selectAll('text').attr('class', 'categoryAxisLabel');
 }
 
 function createYAxis() {
-  store.get().baseElement.append('g')
+  store.getBaseElement().append('g')
     .attr('class', 'y axis')
     .attr('id', 'yaxis')
-    .attr('transform', `translate(${[150, -store.get().margin.bottom / 2]})`)
+    .attr('transform', `translate(${[150, -store.getMargin().bottom / 2]})`)
     .call(yAxis())
     .selectAll('g')
     .append('svg:foreignObject')

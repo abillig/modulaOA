@@ -43,7 +43,7 @@ function generateChart(data) {
   initialChartSetup();
   buildAxes();
 
-  dataDrawer.drawCircles(store.get().baseElement, store.get().currentData);
+  dataDrawer.drawCircles(store.getBaseElement(), store.getCurrentData());
   zoomHandler.calculateZoomLevelMapping();
   zoomHandler.configureSlider();
 }

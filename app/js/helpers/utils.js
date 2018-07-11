@@ -8,8 +8,8 @@ function formatString(thing) {
 }
 
 function getYPositionOf(term) {
-  const percentageHeight = store.get().yAxisLabels.indexOf(term) / store.get().yAxisLabels.length;
-  return store.get().height * percentageHeight - (store.get().yAxisLabels.length - 40);
+  const percentageHeight = store.getYAxisLabels().indexOf(term) / store.getYAxisLabels().length;
+  return store.getHeight() * percentageHeight - (store.getYAxisLabels().length - 40);
 }
 
 export default {

@@ -18,8 +18,8 @@ function drawCircles(element, data) {
 }
 
 function transitionCircles() {
-  const dataCollection = store.get().baseElement.selectAll('circle')
-    .data(store.get().currentData);
+  const dataCollection = store.getBaseElement().selectAll('circle')
+    .data(store.getCurrentData());
 
   dataCollection.exit()
     .remove();

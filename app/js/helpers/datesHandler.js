@@ -3,27 +3,37 @@ import store from '../store';
 
 const parseTime = d3.timeParse('%d-%b-%y');
 
-function collectDates(dataObj) {
-  const datesCollection = [];
-  dataObj.forEach((dataPoint) => {
-    const entryKeys = Object.keys(dataPoint);
-    entryKeys.forEach((key) => {
-      if (parseTime(dataPoint[key])) {
-        datesCollection.push(dataPoint[key]);
-      }
-    });
-  });
-  return datesCollection;
+function stringIsAD3Date(string) {
+  return parseTime(string);
 }
 
-function filterDataObjByDate(dataObj, startDate, endDate) {
+function grabDateFromHealthEvent(healthEventObject) {
+  const healthEventKeys = Object.keys(healthEventObject);
+  let date;
+  healthEventKeys.forEach((key) => {
+    if (stringIsAD3Date(healthEventObject[key])) {
+      date = healthEventObject[key];
+    }
+  });
+  return date;
+}
+
+function collectDates(dataObj) {
+  return dataObj.map(grabDateFromHealthEvent);
+}
+
+function d3DateLiesWithin(date, startDate, endDate) {
+  return parseTime(date) > startDate && parseTime(date) < endDate;
+}
+
+function filterDataObjByDate({ dataObj, startDate, endDate }) {
   const filteredDatesCollection = [];
-  dataObj.forEach((dataPoint) => {
-    const entryKeys = Object.keys(dataPoint);
-    entryKeys.forEach((key) => {
-      if (parseTime(dataPoint[key])) {
-        if (parseTime(dataPoint[key]) > startDate && parseTime(dataPoint[key]) < endDate) {
-          filteredDatesCollection.push(dataPoint);
+  dataObj.forEach((healthEventObject) => {
+    const healthEventKeys = Object.keys(healthEventObject);
+    healthEventKeys.forEach((key) => {
+      if (stringIsAD3Date(healthEventObject[key])) {
+        if (d3DateLiesWithin(healthEventObject[key], startDate, endDate)) {
+          filteredDatesCollection.push(healthEventObject);
         }
       }
     });
@@ -59,18 +69,22 @@ function prepareDateString(dateInMilliseconds) {
 }
 
 function prepareNewDataCollection(zoomLevel) {
-  const currentMedian = medianDate(collectDates(store.get().currentData));
-  const newUpperLimit = currentMedian.getTime() + store.get().zoomLevelMapping[zoomLevel];
-  const newLowerLimit = currentMedian.getTime() - store.get().zoomLevelMapping[zoomLevel];
+  const currentMedian = medianDate(collectDates(store.getCurrentData()));
+  const newUpperLimit = currentMedian.getTime() + store.getZoomLevelMapping()[zoomLevel];
+  const newLowerLimit = currentMedian.getTime() - store.getZoomLevelMapping()[zoomLevel];
   const upperLimitString = parseTime(prepareDateString(newUpperLimit));
   const lowerLimitString = parseTime(prepareDateString(newLowerLimit));
 
-  const newData = filterDataObjByDate(store.get().allData, lowerLimitString, upperLimitString);
+  const newData = filterDataObjByDate({
+    dataObj: store.getAllData(),
+    startDate: lowerLimitString,
+    endDate: upperLimitString,
+  });
   return newData;
 }
 
 function datasetMinAndMaxDates() {
-  return d3.extent(collectDates(store.get().currentData), d => parseTime(d));
+  return d3.extent(collectDates(store.getCurrentData()), d => parseTime(d));
 }
 
 export default {

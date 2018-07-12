@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "watch": "webpack -w",
     "lint": "eslint ./app/js --fix"
   },
   "author": "",

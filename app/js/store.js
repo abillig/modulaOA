@@ -6,7 +6,9 @@ let baseElement,
   allData,
   currentData,
   yAxisLabels,
-  zoomLevelMapping;
+  zoomLevelMapping,
+  xScale,
+  x2;
 
 function setWidth(w) {
   width = w;
@@ -38,6 +40,15 @@ function setYAxisLabels(labels) {
 
 function setTooltip(tt) {
   tooltip = tt;
+}
+
+function setXScale(xs) {
+  console.log('the store got this thing as an x scale: ' + xs)
+  xScale = xs;
+}
+
+function setX2(xs2) {
+  x2 = xs2;
 }
 
 function setZoomLevelMapping(zlm) {
@@ -80,6 +91,14 @@ function getZoomLevelMapping() {
   return zoomLevelMapping;
 }
 
+function getXScale(xs) {
+  return xScale;
+}
+
+function getX2(xs2) {
+  return x2;
+}
+
 export default {
   setWidth,
   setHeight,
@@ -90,6 +109,8 @@ export default {
   setYAxisLabels,
   setTooltip,
   setZoomLevelMapping,
+  setXScale,
+  setX2,
   getBaseElement,
   getWidth,
   getHeight,
@@ -99,4 +120,6 @@ export default {
   getYAxisLabels,
   getTooltip,
   getZoomLevelMapping,
+  getXScale,
+  getX2
 };

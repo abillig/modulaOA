@@ -16,6 +16,24 @@ function initialChartSetup() {
     .attr('class', 'tooltip')
     .style('opacity', 0);
 
+  var slider = d3.select("body").append("p").append("input")
+    .datum({})
+    .attr("type", "range")
+    .attr("value", zoomHandler.zoom().scaleExtent()[0])
+    .attr("min", zoomHandler.zoom().scaleExtent()[0])
+    .attr("max", zoomHandler.zoom().scaleExtent()[1])
+    .attr("step", (zoomHandler.zoom().scaleExtent()[1] - zoomHandler.zoom().scaleExtent()[0]) / 100)
+    .on("input", slided)
+    .call(zoomHandler.zoom());
+
+  function slided(d){
+    // store.getBaseElement()
+      // .call(zoomHandler.zoom());
+    zoomHandler.zoomSlider(d3.select(this).property("value"))
+    // zoomHandler.zoom.scaleBy(d3.select(this).property("value"))
+    //   .event(store.getBaseElement());
+  }
+
   store.setWidth(width);
   store.setHeight(height);
   store.setBaseElement(svg);

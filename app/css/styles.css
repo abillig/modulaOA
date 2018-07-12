@@ -1,5 +1,15 @@
+.zoom {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
 .surgery {
   fill: #ff9800;
+}
+
+circle {
+  clip-path: url(#clip);
 }
 
 .imaging {

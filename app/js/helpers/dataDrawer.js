@@ -1,7 +1,7 @@
 import store from '../store';
 import datesHandler from './datesHandler';
 import axisHandler from './axisHandler';
-import tooltipHandler from './tooltipHandler';
+import { showTooltip, hideTooltip } from './tooltipHandler';
 import utils from './utils';
 
 function drawCircles(element, data) {
@@ -9,10 +9,10 @@ function drawCircles(element, data) {
     .data(data)
     .enter()
     .append('circle')
-    .on('mouseover', d => tooltipHandler.showTooltip(d))
-    .on('mouseout', () => tooltipHandler.hideTooltip())
+    .on('mouseover', d => showTooltip(d))
+    .on('mouseout', () => hideTooltip())
     .attr('r', 10)
-    .attr('cx', d => axisHandler.buildXTimeScale()(datesHandler.parseTime(d.date)))
+    .attr('cx', d => store.getXScale()(datesHandler.parseTime(d.date)))
     .attr('cy', d => utils.getYPositionOf(d.name))
     .attr('class', d => `${d.category.toLowerCase()}-circle`);
 }
@@ -27,7 +27,7 @@ function transitionCircles() {
   dataCollection.transition()
     .duration(900)
     .attr('r', 10)
-    .attr('cx', d => axisHandler.buildXTimeScale()(datesHandler.parseTime(d.date)))
+    .attr('cx', d => store.getXScale()(datesHandler.parseTime(d.date)))
     .attr('cy', d => utils.getYPositionOf(d.name))
     .attr('class', d => `${d.category.toLowerCase()}-circle`);
 
@@ -38,7 +38,7 @@ function transitionCircles() {
     .transition()
     .duration(900)
     .attr('r', 10)
-    .attr('cx', d => axisHandler.buildXTimeScale()(datesHandler.parseTime(d.date)))
+    .attr('cx', d => store.getXScale()(datesHandler.parseTime(d.date)))
     .attr('cy', d => utils.getYPositionOf(d.name))
     .attr('class', d => `${d.category.toLowerCase()}-circle`);
 }

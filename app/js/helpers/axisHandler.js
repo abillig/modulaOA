@@ -1,26 +1,56 @@
 import * as d3 from 'd3';
 import datesHandler from './datesHandler';
+import zoomHandler from './zoomHandler';
 import store from '../store';
 import utils from './utils';
 
 function xScale() {
-  return d3.scaleTime()
-    .rangeRound([150, store.getWidth()]);
+  // return d3.scaleTime()
+  //   .rangeRound([150, store.getWidth()]);
+  //
+  store.setXScale(d3.scaleTime()
+    .rangeRound([150, store.getWidth()])
+    .domain(datesHandler.datasetMinAndMaxDates())
+  )
 }
 
 function addXDomain(scale) {
+  console.log('the scale in the store is:' + scale())
   return scale().domain(datesHandler.datasetMinAndMaxDates());
 }
 
 function buildXTimeScale() {
-  return addXDomain(xScale);
+  xScale()
+  return addXDomain(store.getXScale());
+}
+
+function x2(){
+  store.setX2(d3.scaleTime()
+    .rangeRound([150, store.getWidth()]))
 }
 
 function createXAxis() {
+  xScale()
   store.getBaseElement().append('g')
     .attr('class', 'x axis')
     .attr('transform', `translate(0,${store.getHeight()})`)
-    .call(d3.axisBottom(buildXTimeScale()));
+    .call(d3.axisBottom(store.getXScale()));
+
+  store.getBaseElement().append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", store.getWidth())
+    .attr("height", store.getHeight())
+    .attr("x", 150);
+
+  store.getBaseElement().append("rect")
+    .attr("class", "zoom")
+    .attr("width", store.getWidth())
+    .attr("height", store.getHeight())
+    .attr("transform", "translate(" + store.getMargin().left + "," + store.getMargin().top + ")")
+    .call(zoomHandler.zoom());
+  x2()
+  store.getX2().domain(datesHandler.datasetMinAndMaxDates())
 }
 
 function makeYAxisLabels() {
@@ -81,7 +111,6 @@ function formatYAxisHtml(d, i) {
 }
 
 function boldCategoryLabels() {
-  // bold the y axis
   store.getBaseElement().select('#yaxis').selectAll('text').attr('class', 'categoryAxisLabel');
 }
 
@@ -116,4 +145,6 @@ export default {
   createYAxis,
   buildXTimeScale,
   transitionAxes,
+  xScale,
+  x2
 };
